@@ -96,9 +96,6 @@ const questions = [
 ];
 
 async function main() {
-  // clear the console
-  console.clear();
-
   // log create-dylan-app letters
   [
     '    ___       ___       ___   ',
@@ -113,7 +110,7 @@ async function main() {
 
   const answers = await inquirer.prompt(questions);
 
-  console.log('\nSetting up project...\n');
+  console.log('\nCreating project...');
 
   const projectPaths = {
     root: resolve(cwd, answers.name),
@@ -150,6 +147,8 @@ async function main() {
     await extra.copy(styleConfigs.tailwindcss.contentPath, projectPaths.root);
   }
 
+  console.log('Installing dependencies...');
+
   // change directory to the project
   process.chdir(projectPaths.root);
 
@@ -179,6 +178,8 @@ async function main() {
   if (styleConfig) {
     install(styleConfig.dependencies.saveDev, { isDev: true });
   }
+
+  console.log('Done!\n');
 }
 
 function install(dependencies, options = { isDev: false }) {
