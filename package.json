@@ -1,0 +1,18 @@
+{
+  "name": "create-dylan-app",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "bin": "bin/index.js",
+  "files": [
+    "bin",
+    "content"
+  ],
+  "scripts": {},
+  "author": "Dylan Greene",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "inquirer": "^9.2.5"
+  }
+}
