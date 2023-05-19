@@ -8,6 +8,7 @@
     "bin",
     "content"
   ],
+  "keywords": ["cli", "vite", "react"],
   "scripts": {},
   "author": "Dylan Greene",
   "license": "ISC",
