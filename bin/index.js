@@ -15,10 +15,12 @@ import { resolve } from 'node:path';
 import { execSync } from 'node:child_process';
 import * as extra from 'fs-extra';
 
+// where this script lives at (e.g /bin/index.js)
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+// where this script is being called from
 const cwd = process.cwd();
 
-const baseConfigs = {
+const configs = {
   javascript: {
     contentPath: resolve(__dirname, '../content/javascript'),
     dependencies: {
@@ -42,6 +44,7 @@ const baseConfigs = {
 };
 
 const styleConfigs = {
+  none: {},
   mui: {
     dependencies: {
       saveDev: ['@mui/material@5', '@emotion/react@11', '@emotion/styled@11'],
@@ -85,13 +88,13 @@ const questions = [
     name: 'useTypeScript',
     message: 'Do you want to use TypeScript?',
     default: false,
-    transformer: (answer) => (answer ? '👍' : '👎'),
+    transformer: (answer) => (answer ? 'Yes' : 'No'),
   },
   {
     type: 'list',
     name: 'styleLibrary',
     message: 'What style library would you like to include?',
-    choices: ['None', 'MUI', 'Tailwind CSS', 'Bootstrap'],
+    choices: Object.keys(styleConfigs),
   },
 ];
 
@@ -108,6 +111,7 @@ async function main() {
     '',
   ].forEach((line) => console.log(line));
 
+  // start the prompt
   const answers = await inquirer.prompt(questions);
 
   console.log('\nCreating project...');
@@ -125,26 +129,27 @@ async function main() {
   // copy common folder
   await extra.copy(resolve(__dirname, '../content/common'), projectPaths.root);
 
-  // set the package name
+  // read and update the package name
   const packageJSON = JSON.parse(readFileSync(projectPaths.package, 'utf-8'));
   packageJSON.name = answers.name;
 
-  // write the updated package.json
+  // write the updated package
   writeFileSync(
     projectPaths.package,
     JSON.stringify(packageJSON, undefined, 2)
   );
 
   // main setup
-  const isTypeScript = answers.useTypeScript === '👍';
-  const config = isTypeScript ? baseConfigs.typescript : baseConfigs.javascript;
+  const isTypeScript = answers.useTypeScript === 'Yes';
+  const config = isTypeScript ? configs.typescript : configs.javascript;
+  const styleConfig = styleConfigs[answers.styleLibrary];
 
   // copy main content
   await extra.copy(config.contentPath, projectPaths.root);
 
   // copy style content if any
-  if (answers.styleLibrary === 'Tailwind CSS') {
-    await extra.copy(styleConfigs.tailwindcss.contentPath, projectPaths.root);
+  if (styleConfig.contentPath) {
+    await extra.copy(styleConfig.contentPath, projectPaths.root);
   }
 
   console.log('Installing dependencies...');
@@ -155,24 +160,6 @@ async function main() {
   // install dependencies
   install(config.dependencies.save);
   install(config.dependencies.saveDev, { isDev: true });
-
-  let styleConfig = null;
-
-  // setup style libraries
-  switch (answers.styleLibrary) {
-    case 'MUI': {
-      styleConfig = styleConfigs.mui;
-      break;
-    }
-    case 'Tailwind CSS': {
-      styleConfig = styleConfigs.tailwindcss;
-      break;
-    }
-    case 'Bootstrap': {
-      styleConfig = styleConfigs.bootstrap;
-      break;
-    }
-  }
 
   // install style dependencies if any
   if (styleConfig) {
