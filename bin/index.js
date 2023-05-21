@@ -162,7 +162,7 @@ async function main() {
   install(config.dependencies.saveDev, { isDev: true });
 
   // install style dependencies if any
-  if (styleConfig) {
+  if (styleConfig.dependencies) {
     install(styleConfig.dependencies.saveDev, { isDev: true });
   }
 
