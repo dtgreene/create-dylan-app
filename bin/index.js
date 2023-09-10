@@ -140,6 +140,9 @@ async function main() {
   }
 
   console.log('Done!\n');
+  console.log(
+    `To start your development server, run \x1b[34mcd ${answers.name}\x1b[0m and \x1b[34mnpm start\x1b[0m\n`
+  );
 }
 
 function install(dependencies, options = { isDev: false }) {
