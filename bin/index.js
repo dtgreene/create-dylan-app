@@ -129,14 +129,14 @@ async function main() {
   // Change directory to the project
   process.chdir(projectPaths.root);
 
-  // // Install dependencies
-  // install(baseConfig.dependencies.save);
-  // install(baseConfig.dependencies.saveDev, { isDev: true });
+  // Install dependencies
+  install(baseConfig.dependencies.save);
+  install(baseConfig.dependencies.saveDev, { isDev: true });
 
-  // // Install style dependencies if any
-  // if (styleConfig.dependencies) {
-  //   install(styleConfig.dependencies.saveDev, { isDev: true });
-  // }
+  // Install style dependencies if any
+  if (styleConfig.dependencies) {
+    install(styleConfig.dependencies.saveDev, { isDev: true });
+  }
 
   console.log('Done!\n');
   console.log(
