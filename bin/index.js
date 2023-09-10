@@ -21,7 +21,6 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const cwd = process.cwd();
 
 const baseConfig = {
-  contentPath: resolve(__dirname, '../content/javascript'),
   dependencies: {
     save: ['react@18', 'react-dom@18'],
     saveDev: ['vite@4', '@vitejs/plugin-react@4'],
@@ -130,14 +129,14 @@ async function main() {
   // Change directory to the project
   process.chdir(projectPaths.root);
 
-  // Install dependencies
-  install(baseConfig.dependencies.save);
-  install(baseConfig.dependencies.saveDev, { isDev: true });
+  // // Install dependencies
+  // install(baseConfig.dependencies.save);
+  // install(baseConfig.dependencies.saveDev, { isDev: true });
 
-  // Install style dependencies if any
-  if (styleConfig.dependencies) {
-    install(styleConfig.dependencies.saveDev, { isDev: true });
-  }
+  // // Install style dependencies if any
+  // if (styleConfig.dependencies) {
+  //   install(styleConfig.dependencies.saveDev, { isDev: true });
+  // }
 
   console.log('Done!\n');
   console.log(
