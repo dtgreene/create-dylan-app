@@ -1,6 +1,6 @@
 {
   "name": "create-dylan-app",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "description": "",
   "type": "module",
   "bin": "bin/index.js",
@@ -8,7 +8,11 @@
     "bin",
     "content"
   ],
-  "keywords": ["cli", "vite", "react"],
+  "keywords": [
+    "cli",
+    "vite",
+    "react"
+  ],
   "scripts": {},
   "author": "Dylan Greene",
   "license": "ISC",
