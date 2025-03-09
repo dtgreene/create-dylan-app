@@ -22,27 +22,17 @@ const cwd = process.cwd();
 
 const baseConfig = {
   dependencies: {
-    save: ['react@18', 'react-dom@18'],
-    saveDev: ['vite@4', '@vitejs/plugin-react@4'],
+    save: ['react@19', 'react-dom@19'],
+    saveDev: ['vite@6', '@vitejs/plugin-react@4'],
   },
 };
 
 const styleConfigs = {
   none: {},
-  mui: {
-    dependencies: {
-      saveDev: ['@mui/material@5', '@emotion/react@11', '@emotion/styled@11'],
-    },
-  },
   tailwindcss: {
     contentPath: resolve(__dirname, '../content/tailwindcss'),
     dependencies: {
-      saveDev: ['tailwindcss@3', 'postcss@8', 'autoprefixer@10'],
-    },
-  },
-  bootstrap: {
-    dependencies: {
-      saveDev: ['bootstrap@5'],
+      saveDev: ['tailwindcss@4', '@tailwindcss/vite@4'],
     },
   },
 };
